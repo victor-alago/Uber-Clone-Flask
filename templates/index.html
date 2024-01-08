@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Uber Clone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .header {
+            background-color: #000;
+            color: white;
+            padding: 10px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .footer {
+            background-color: #000;
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .content {
+            margin-top: 50px;
+        }
+        .custom-link {
+            color: #fff;
+            background-color: #000;
+            border: none;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .custom-link:hover {
+            background-color: #333;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Move with Uber</div>
+    <div class="content">
+        <h3>Anywhere, anytime</h3>
+        <div class="col-md-6 mx-auto">
+            <p>How would you like to continue?</p>
+            <h4><a href='/driver_login' class="custom-link">Driver</a></h4>
+            <br>
+            <h4><a href='/user_login' class="custom-link">User</a></h4>
+        </div>
+    </div>
+    <div class="footer">© 2024 Uber Clone. All rights reserved.</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

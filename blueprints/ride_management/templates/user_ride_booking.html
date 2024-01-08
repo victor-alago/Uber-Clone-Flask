@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Booking Details | Uber Clone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .booking-container { background-color: #f4f4f4; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .booking-details { margin-bottom: 15px; }
+        .booking-details strong { color: #333; }
+        .btn-primary { background-color: #007bff; border-color: #007bff; }
+        .btn-primary:hover { background-color: #0069d9; border-color: #0062cc; }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Confirm Your Ride Booking</h1>
+        <div class="booking-container">
+            <div class="booking-details">
+                <h4>Booking Information</h4>
+                <p><strong>Name:</strong> {{ booking.user_name }}</p>
+                <p><strong>Pickup Address:</strong> {{ booking.pickup_address }}</p>
+                <p><strong>Drop-off Address:</strong> {{ booking.drop_off_address }}</p>
+                <p><strong>Pickup Time:</strong> {{ booking.pickup_time }}</p>
+            </div>
+
+            <form id="ride-details-form" action="/request_ride" method="POST">
+                <input type="hidden" name="user_name" value="{{ booking.user_name }}">
+                <input type="hidden" name="pickup_address" value="{{ booking.pickup_address }}">
+                <input type="hidden" name="drop_off_address" value="{{ booking.drop_off_address }}">
+                <input type="hidden" name="pickup_time" value="{{ booking.pickup_time }}">
+
+                <div class="form-group">
+                    <label for="carType"><strong>Choose Car Type:</strong></label>
+                    <select name="car_type" id="carType" class="form-control">
+                        <option value="Any">Any</option>
+                        <option value="Sedan">Sedan</option>
+                        <option value="SUV">SUV</option>
+                        <option value="Coupe">Coupe</option>
+                        <option value="Minivan">Minivan</option>
+                        <option value="Pickup Truck">Pickup Truck</option>
+                        <option value="Van">Van</option>
+                        <option value="Luxury SUV">Luxury SUV</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Request Ride</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Profile | Uber Clone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { margin-top: 30px; }
+        .profile-pic { max-width: 150px; max-height: 150px; border-radius: 50%; }
+        .footer { background-color: #000; color: white; text-align: center; padding: 10px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Uber Clone</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('driver_dashboard.driver_home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('driver_authentication.driver_logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Edit Profile</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                <img src="{{ profile_pic_url }}" alt="Profile Picture" style="max-width: 150px; max-height: 150px; border-radius: 50%;">
+            </div>
+
+            <div class="form-group">
+                <label for="profile_pic">Change Profile Picture:</label>
+                {{ form.profile_pic(class="form-control-file") }}
+            </div>
+
+            <div class="form-group">
+                <label>Email:</label>
+                <input type="email" name="email" class="form-control" value="{{ driver.email }}">
+            </div>
+            <div class="form-group">
+                <label>First Name:</label>
+                <input type="text" name="first_name" class="form-control" value="{{ driver.first_name }}">
+            </div>
+            <div class="form-group">
+                <label>Last Name:</label>
+                <input type="text" name="last_name" class="form-control" value="{{ driver.last_name }}">
+            </div>
+            <div class="form-group">
+                <label>Age:</label>
+                <input type="number" name="age" class="form-control" value="{{ driver.age }}" min="18">
+            </div>
+            <div class="form-group">
+                <label>Country:</label>
+                <input type="text" name="country" class="form-control" value="{{ driver.country }}">
+            </div>
+            <div class="form-group">
+                <label>Zip-Code:</label>
+                <input type="text" name="zip_code" class="form-control" value="{{ driver.zip_code }}">
+            </div>
+            <div class="form-group">
+                <label>City:</label>
+                <input type="text" name="city" class="form-control" value="{{ driver.city }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+        
+        
+        <form method="POST" action="{{ url_for('driver_dashboard.delete_driver_profile_pic') }}">
+            <button type="submit" class="btn btn-danger mt-2">Delete Profile Picture</button>
+        </form>
+
+    </div>
+
+    <div class="footer">© 2024 Uber Clone. All rights reserved.</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

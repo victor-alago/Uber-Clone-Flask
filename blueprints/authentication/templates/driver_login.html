@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Driver Login | Uber Clone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 400px; margin-top: 50px; }
+        .footer { background-color: #000; color: white; text-align: center; padding: 10px; margin-top: 50px; }
+        .custom-link { text-decoration: none; color: #000; }
+        .custom-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Driver Login</h1>
+        <form method="POST" class="mt-4">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.email.label(class="form-label") }}
+                {{ form.email(class="form-control") }}
+                {% for error in form.email.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                {{ form.password.label(class="form-label") }}
+                {{ form.password(class="form-control") }}
+                {% for error in form.password.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+            <div class="form-group form-check">
+                {{ form.remember(class="form-check-input", id="remember") }}
+                {{ form.remember.label(class="form-check-label") }}
+            </div>
+            {{ form.submit(class="btn btn-primary w-100") }}
+        </form>
+        <div class="text-center mt-3">
+            <a href='/driver_register' class="custom-link">Don't have an account? Register here</a>
+        </div>
+    </div>
+    <div class="footer">© 2024 Uber Clone. All rights reserved.</div>
+</body>
+</html>

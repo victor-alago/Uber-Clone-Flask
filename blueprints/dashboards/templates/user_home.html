@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>User Home</title>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <style>
+         #map {
+             height: 500px;
+             width: 100%;
+             border: 4px solid #fff;
+             border-radius: 12px;
+             overflow: hidden;
+         }
+         .sidebar {
+             width: 35%;
+         }
+         .map-container {
+             width: 65%;
+         }
+         .row {
+             display: flex;
+             justify-content: space-between;
+             margin-top: 20px;
+         }
+         .geocoder {
+             margin-bottom: 20px;
+         }
+        body { font-family: Arial, sans-serif; }
+        
+        .form-container, .map-container { padding: 20px; background-color: #f8f9fa; border-radius: 10px; }
+        .row { display: flex; justify-content: space-between; margin-top: 20px; }
+        .footer { background-color: #000; color: white; text-align: center; padding: 10px; margin-top: 30px; }
+        .btn-custom { background-color: #007bff; color: white; border: none; border-radius: 4px; padding: 10px 20px; }
+        .btn-custom:hover { background-color: #0056b3; }
+     </style>
+ </head>
+ <body>
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+         <a class="navbar-brand" href="#">Uber Clone</a>
+         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+             <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarNav">
+             <ul class="navbar-nav ml-auto">
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ url_for('user_dashboard.user_profile') }}">
+                         <img src="{{ url_for('static', filename='profile_pics/' + user.profile_pic) if user.profile_pic else url_for('static', filename='profile_pics/default.jpg') }}" alt="Profile Picture" style="height: 40px; width: 40px; border-radius: 50%;">
+                     </a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ url_for('user_dashboard.user_profile') }}">Profile</a>
+                 </li>
+                 <li class="nav-item">
+                     <a class="nav-link" href="{{ url_for('user_authentication.logout') }}">Logout</a>
+                 </li>
+             </ul>
+         </div>
+     </nav>
+     <div class="container mt-4">
+         <h1>Welcome, {{ user.first_name }}</h1>
+         <p>"Discover the World one journey at a time"</p>
+     
+         <div class="row">
+             <div class="sidebar">
+                 <h2>Book your ride</h2>
+                 <form id="location-form" method="POST" action="/submit_ride_details">
+                    <label for="pickupLocation">Enter Pickup Location:</label>
+                    <input type="text" id="pickupLocation" name="pickupLocation" placeholder="E.g., Pickup Location" autocomplete="off">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="getCurrentLocation()">Get Current Location</button>
+                    <br>
+                    
+                    <label for="dropOffLocation">Enter Drop-Off Location:</label>
+                    <input type="text" id="dropOffLocation" name="dropOffLocation" placeholder="E.g., Drop-Off Location" autocomplete="off">
+ 
+                    <label for="pickupTime">Enter Pickup Time:</label>
+                    <input type="time" id="pickupTime" name="pickupTime" required>
+
+                    <div id="duration" class="text-center my-3"></div>
+ 
+                    <button type="button" onclick="calculateAndDisplayRoute(event)">See Duration</button>
+                    <button type="submit">Continue Booking</button>
+                 </form>
+             </div>
+             <div class="map-container">
+                 <div id='map'></div>
+             </div>
+         </div>
+     </div>
+
+     <div class="footer">© 2024 Uber Clone. All rights reserved.</div>
+     
+     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDR6EsMRRA-L-Y0iwnPF-Tr1Zx-9BMIX6o&libraries=places&callback=initMap"></script>
+     <script>
+        let map;
+        let directionsService;
+        let directionsRenderer;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 48.8566, lng: 2.3522 },
+                zoom: 14
+            });
+
+            directionsService = new google.maps.DirectionsService();
+            directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            // Setup autocomplete for pickup and drop-off locations
+            setupAutocomplete('pickupLocation', map);
+            setupAutocomplete('dropOffLocation', map);
+        }
+
+        function setupAutocomplete(elementId, map) {
+            const input = document.getElementById(elementId);
+            const autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+            autocomplete.bindTo('bounds', map);
+        }
+ 
+        function calculateAndDisplayRoute(event) {
+            event.preventDefault();
+
+            var pickupLocation = document.getElementById('pickupLocation').value;
+            var dropOffLocation = document.getElementById('dropOffLocation').value;
+
+            directionsService.route({
+                origin: pickupLocation,
+                destination: dropOffLocation,
+                travelMode: 'DRIVING'
+            }, function (response, status) {
+                if (status === 'OK') {
+                    directionsRenderer.setDirections(response);
+
+                    var durationText = 'Estimated Duration: ' + response.routes[0].legs[0].duration.text;
+                    document.getElementById('duration').innerText = durationText;
+                } else {
+                    window.alert('Directions request failed due to ' + status);
+                }
+            });
+        }
+
+        function getCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var lat = position.coords.latitude;
+                    var lng = position.coords.longitude;
+                    var latlng = new google.maps.LatLng(lat, lng);
+                    var geocoder = new google.maps.Geocoder();
+
+                    geocoder.geocode({'latLng': latlng}, function(results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
+                            if (results[0]) {
+                                document.getElementById('pickupLocation').value = results[0].formatted_address;
+                            } else {
+                                window.alert('No results found');
+                            }
+                        } else {
+                            window.alert('Geocoder failed due to: ' + status);
+                        }
+                    });
+                }, function() {
+                    window.alert('Geolocation service failed');
+                });
+            } else {
+                window.alert('Your browser does not support geolocation.');
+            }
+        }
+
+
+         
+     </script>
+ 
+     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ </body>
+ </html>
+ 

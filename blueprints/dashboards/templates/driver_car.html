@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Information | Uber Clone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { margin-top: 30px; }
+        .car-pic { max-width: 300px; max-height: 300px; border-radius: 15px; }
+        .footer { background-color: #000; color: white; text-align: center; padding: 10px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Uber Clone</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('driver_dashboard.driver_home') }}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('driver_authentication.driver_logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h2>Car Information</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                <img src="{{ car_pic_url }}" alt="Car Picture" style="max-width: 300px; max-height: 300px; border-radius: 50%;">
+            </div>
+            <div class="form-group">
+                <label for="car_picture">Change Car Picture:</label>
+                {{ form.car_picture(class="form-control-file") }}
+            </div>
+            <div class="form-group">
+                <label>Car Type:</label>
+                <select name="type" value="{{ car.type }}" class="form-control">
+                    <option value="Sedan" {% if car.type == 'Sedan' %} selected {% endif %}>Sedan</option>
+                    <option value="SUV" {% if car.type == 'SUV' %} selected {% endif %}>SUV</option>
+                    <option value="Coupe" {% if car.type == 'Coupe' %} selected {% endif %}>Coupe</option>
+                    <option value="Minivan" {% if car.type == 'Minivan' %} selected {% endif %}>Minivan</option>
+                    <option value="Pickup Truck" {% if car.type == 'Pickup Truck' %} selected {% endif %}>Pickup Truck</option>
+                    <option value="Van" {% if car.type == 'Van' %} selected {% endif %}>Van</option>
+                    <option value="Luxury SUV" {% if car.type == 'Luxury SUV' %} selected {% endif %}>Luxury SUV</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Car Make:</label>
+                <input type="text" class="form-control" name="make" value="{{ car.make }}">
+            </div>
+            <div class="form-group">
+                <label>Car Model:</label>
+                <input type="text" class="form-control" name="model" value="{{ car.model}}">
+            </div>
+            <div class = "form-group">
+                <label>Car Year:</label>
+                <input type="number" class="form-control" name="year" value="{{ car.year }}" min="2005" max="2023">
+            </div>
+            <div class="form-group">
+                <label>Seater:</label>
+                <input type="number" class="form-control" name="seater" value="{{ car.seater }}" min="4" max="10">
+            </div>
+            <div class="form-group">
+                <label>Car Color:</label>
+                <input type="text" class="form-control" name="color" value="{{ car.color }}">
+            </div>
+            <div class="form-group">
+                <label>Car Plate Number:</label>
+                <input type="text" class="form-control" name="plate_number" value="{{ car.plate_number }}">
+            </div>
+            <button type="submit" class="btn btn-primary">Update Car</button>
+        </form>
+    </div>
+
+    <div class="footer">© 2024 Uber Clone. All rights reserved.</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

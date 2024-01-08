@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Home | Uber Clone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .welcome-message { background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin-bottom: 20px; }
+        .ride-request { background-color: #fff; padding: 15px; border-radius: 10px; margin-bottom: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        .footer { background-color: #000; color: white; text-align: center; padding: 10px; margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Uber Clone</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <!-- Profile and Logout Links -->
+                <li class="nav-item" style="float: left;">
+                    <a class="nav-link" href="{{ url_for('driver_car.driver_car') }}">
+                        <img src="{{ url_for('static', filename='car_pics/' + car.car_picture) if car.car_picture else url_for('static', filename='car_pics/default_car.jpg') }}" alt="Car Picture" style="height: 40px; width: 40px; border-radius: 50%;">
+                    </a>
+                </li>
+                <li class="nav-item" style="float: left; margin-right: 50px;">
+                    <a class="nav-link" href="{{ url_for('driver_car.driver_car') }}">Your Car</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('driver_dashboard.driver_profile') }}">Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('driver_authentication.driver_logout') }}">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="welcome-message">
+            <h1>Welcome, {{ driver.first_name }}</h1>
+            <p>“Every drive is an opportunity to discover new roads and new horizons."</p>
+        </div>
+        <h2>Ride Requests</h2>
+        <div class="ride-requests">
+            {% for ride in ride_requests %}
+                <div class="ride-request">
+                    <p><strong>From:</strong> {{ ride['pickup_address'] }}</p>
+                    <p><strong>To:</strong> {{ ride['drop_off_address'] }}</p>
+                    <p><strong>Time:</strong> {{ ride['pickup_time'] }}</p>
+                    <form action="/view_ride_details" method="POST">
+                        <input type="hidden" name="ride_id" value="{{ ride['ride_id'] }}">
+                        <button type="submit" class="btn btn-primary">View Details of Ride</button>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="footer">© 2024 Uber Clone. All rights reserved.</div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

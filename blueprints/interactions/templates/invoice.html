@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice - Uber Clone</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .invoice-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+        .invoice-header {
+            margin-bottom: 40px;
+        }
+        .invoice-body {
+            margin-bottom: 20px;
+        }
+        .invoice-footer {
+            font-size: 14px;
+            color: #555;
+        }
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h1>Thank You for Riding with Us!</h1>
+            <p>Your journey with Uber Clone was successful.</p>
+        </div>
+        
+        <div class="invoice-body">
+            <p><strong>Invoice Date:</strong> {{ current_date }}</p>
+            <p>We hope you enjoyed your ride. Your safety and satisfaction are our top priorities.</p>
+        </div>
+
+        <div class="invoice-footer">
+            <p>Stay safe and we look forward to your next journey with us!</p>
+            <a href="/" class="btn-custom">Return Home</a>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.5/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
